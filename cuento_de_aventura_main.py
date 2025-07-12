@@ -4,13 +4,20 @@ import sys
 from cuento_de_Aventura_Shrek import Personaje, Objeto, Inventario, Enemigo
 from cuento_de_aventura_equipos import equipos_explorar, equipos_tienda
 stick = Objeto("espada stick", 2, 4, 1, "comun","equipos", 5)
+
+
 nombre = input("ingresar nombre de tu personaje")
+while len(nombre) < 2:
+    nombre = input("ingresar nombre de tu personaje")
+
+
+vida_total = 150
 vida_total = 150
 ataque_total = 15
 defensa_total = 6
 personaje_principal = Personaje(nombre, vida_total, ataque_total, defensa_total,100, stick)
 tienda = equipos_tienda().equipo()
-def iniciar_juego()
+def iniciar_juego():
     menu_principal()
     opcion = int(input("elija una opcion:"))
     if opcion == 1:
