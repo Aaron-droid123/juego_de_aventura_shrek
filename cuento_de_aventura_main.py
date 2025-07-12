@@ -12,28 +12,47 @@ while len(nombre) < 2:
 
 
 vida_total = 150
-vida_total = 150
 ataque_total = 15
 defensa_total = 6
 personaje_principal = Personaje(nombre, vida_total, ataque_total, defensa_total,100, stick)
 tienda = equipos_tienda().equipo()
+def validar_input_opcion():
+    while True:
+        opcion = input("ingrese una opcion")
+        if not opcion:
+            print("no se permite entrada vacia")
+            continue
+        if not opcion.isdigit():
+            print("solo se permiten numeros enteros")
+            continue
+        opcion = int(opcion)
+        if 1 <= opcion <= 5:
+            print("numero valido")
+            return opcion
+        else:
+            print("numero fuera de rango")
+
 def iniciar_juego():
     menu_principal()
-    opcion = int(input("elija una opcion:"))
+
+
+    opcion = validar_input_opcion()
+
     if opcion == 1:
         enemigo = personaje_principal.encontrar_enemigo(enemigos_lista)
         menu_explorar(enemigo)
-    if opcion == 2:
+    elif opcion == 2:
         REVISAR_ESTADO()
-    if opcion == 3:
+    elif opcion == 3:
         menu_tienda()
-    if opcion == 4:
+    elif opcion == 4:
         menu_inventario()
         # en la siguiente clase avanzaremos con: inventario
-    if opcion == 5:
+    elif opcion == 5:
         personaje_principal.curar_vida(vida_total)
         print(personaje_principal)
         iniciar_juego()
+
 
 def menu_principal():
     print("")
