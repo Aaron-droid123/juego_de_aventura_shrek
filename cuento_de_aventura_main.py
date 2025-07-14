@@ -16,7 +16,17 @@ ataque_total = 15
 defensa_total = 6
 personaje_principal = Personaje(nombre, vida_total, ataque_total, defensa_total,100, stick)
 tienda = equipos_tienda().equipo()
-def validar_input_opcion():
+def validar_input_cadenas(message):
+    while True:
+        mensaje = input(message)
+
+
+        if not len(mensaje) < 2:
+            print("cadena valido")
+            return mensaje
+        else:
+            print("cadena incorrecta o vacia")
+def validar_input_opcion(max_opc):
     while True:
         opcion = input("ingrese una opcion")
         if not opcion:
@@ -26,7 +36,7 @@ def validar_input_opcion():
             print("solo se permiten numeros enteros")
             continue
         opcion = int(opcion)
-        if 1 <= opcion <= 5:
+        if 1 <= opcion <= max_opc:
             print("numero valido")
             return opcion
         else:
@@ -36,7 +46,7 @@ def iniciar_juego():
     menu_principal()
 
 
-    opcion = validar_input_opcion()
+    opcion = validar_input_opcion(5)
 
     if opcion == 1:
         enemigo = personaje_principal.encontrar_enemigo(enemigos_lista)
@@ -71,7 +81,7 @@ def menu_explorar(enemigo):
     print(personaje_principal)
     print("1. PELEAR")
     print("2. ESCAPAR")
-    opcion = int(input("ingrese opcion"))
+    opcion = validar_input_opcion(2)
     if opcion == 1:
         personaje_principal = enemigo.atacar(personaje_principal)
         enemigo = personaje_principal.atacar(enemigo)
@@ -124,7 +134,7 @@ def menu_tienda():
     print("1. COMPRAR OBJETO")
     print("2. VENDER OBJETO")
     print("3. SALIR DE LA TIENDA")
-    opcion = int(input("ingrese una opcion"))
+    opcion = validar_input_opcion(3)
     if opcion == 1:
         comprar()
     if opcion == 2:
@@ -197,19 +207,25 @@ def comprar():
     print("1. DETALLES DE OBJETO")
     print("2. COMPRAR OBJETO DEFINITIVAMENTE")
     print("3. SALIR DE LA TIENDA")
-    opcion = int(input("ingresar opcion"))
+    opcion = validar_input_opcion(3)
     if opcion == 1:
-        objeto = input("ingresar nombre de objeto")
+        objeto = validar_input_cadenas("ingrese el nombre del objeto")
         for list in tienda:
             if list.name == objeto:
                 print(list)
         comprar()
     if opcion == 2:
-        objeto_a_comprar = input("ingresar nombre del objeto que desea comprar")
+        objeto_a_comprar = validar_input_cadenas("ingresar nombre del objeto que desea comprar")
         objeto_encontrado = ""
-        for list in tienda:
-            if objeto_a_comprar == list.name:
-                objeto_encontrado = list
+        while True:
+            for list in tienda:
+                if objeto_a_comprar == list.name:
+                    objeto_encontrado = list
+                    break
+            if objeto_encontrado == "":
+                objeto_a_comprar = validar_input_cadenas("ingresar nombre del objeto que desea comprar")
+            else:
+                break
         if personaje_principal.monedas >= objeto_encontrado.price:
             objeto_encontrado.comprar_objeto(personaje_principal)
             inventario_total.objetos.append(objeto_encontrado)
@@ -232,7 +248,7 @@ def menu_inventario():
     print("<<<<BIENVENIDO A TU INVENTARIO>>>>")
     print("1. MOSTRAR OBJETO")
     print("2. SALIR DEL INVENTARIO")
-    opcion = int(input("ingrese una opcion"))
+    opcion = validar_input_opcion(2)
     if opcion == 1:
         menu_mostrar_objeto()
     if opcion == 2:
@@ -247,7 +263,7 @@ def menu_mostrar_objeto():
     print("3. MEJORAR COMIDA")
     print("4. CONSUMIR COMIDA")
     print("5. SALIR INVENTARIO")
-    opcion = int(input("ingrese una opcion"))
+    opcion = validar_input_opcion(5)
 
     if opcion == 1:
         if not personaje_principal.vida == vida_total:
