@@ -148,14 +148,36 @@ def vender():
     nombre_objeto = ""
     calidad_comida = ""
     while confirma == "no":
-        nombre_objeto = input("escriba el nombre de el objeto que quiera vender")
+
+
+        while True:
+            nombre_objeto = input("escriba el nombre de el objeto que quiera vender")
+            if nombre_objeto.isdigit():
+                print("no se permiten numeros, solo cadenas")
+                continue
+            if len(nombre_objeto) < 2:
+                print("no se permiten entradas vacias o menor de 2 letras")
+            else:
+                break
+
         for list in inventario_total.objetos:
             if list.name == nombre_objeto:
                 if list.type == "comida":
                     calidad_comida = input("ingrese la calidad de la comida")
                     break
 
-        confirma = input(f"esta seguro que escribio y desea vender {nombre_objeto}: (si/no/cancelar)")
+        while True:
+            confirma = input(f"esta seguro que escribio y desea vender {nombre_objeto}: (si/no/cancelar)")
+            if confirma.isdigit():
+                print("no se permiten numeros, solo cadenas")
+                continue
+            if len(confirma) < 2:
+                print("cadena vacia o incompleta")
+            else:
+                print("cadena valida")
+                break
+
+
         if confirma == "cancelar":
             menu_tienda()
             break
@@ -163,6 +185,7 @@ def vender():
         if list.name == nombre_objeto and calidad_comida == list.quality or list.type == "equipos" and list.name == nombre_objeto:
             nombre_objeto = list
     indice = inventario_total.objetos.index(nombre_objeto)
+    # corregir el bug 'nombre_objeto no encontrado' para la siguiente clase
     item = inventario_total.objetos.pop(indice)
     item.vender_objeto(personaje_principal)
     del item
