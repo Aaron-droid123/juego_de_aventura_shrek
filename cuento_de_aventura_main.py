@@ -216,6 +216,8 @@ def comprar():
         comprar()
     if opcion == 2:
         objeto_a_comprar = validar_input_cadenas("ingresar nombre del objeto que desea comprar")
+        if objeto_a_comprar == "cancelar":
+            menu_tienda()
         objeto_encontrado = ""
         while True:
             for list in tienda:
@@ -224,6 +226,8 @@ def comprar():
                     break
             if objeto_encontrado == "":
                 objeto_a_comprar = validar_input_cadenas("ingresar nombre del objeto que desea comprar")
+                if objeto_a_comprar == "cancelar":
+                    menu_tienda()
             else:
                 break
         if personaje_principal.monedas >= objeto_encontrado.price:
