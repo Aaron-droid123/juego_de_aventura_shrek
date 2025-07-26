@@ -57,7 +57,6 @@ def iniciar_juego():
         menu_tienda()
     elif opcion == 4:
         menu_inventario()
-        # en la siguiente clase avanzaremos con: inventario
     elif opcion == 5:
         personaje_principal.curar_vida(vida_total)
         print(personaje_principal)
@@ -184,6 +183,9 @@ def vender():
     for list in inventario_total.objetos:
         if list.name == nombre_objeto and calidad_comida == list.quality or list.type == "equipos" and list.name == nombre_objeto:
             nombre_objeto = list
+    if isinstance(nombre_objeto, str):
+        print("el objeto que busca no se encuentra en el inventario")
+        menu_tienda()
     indice = inventario_total.objetos.index(nombre_objeto)
     # corregir el bug 'nombre_objeto no encontrado' para la siguiente clase
     item = inventario_total.objetos.pop(indice)
@@ -266,7 +268,6 @@ def comprar():
 
     if opcion == 3:
         iniciar_juego()
-    # siguiente clase: revisar juego
 def salir_tienda():
     iniciar_juego()
 
@@ -415,7 +416,6 @@ def REVISAR_ESTADO():
         print(f"el ataque del obj. es {personaje_principal.espada.attack}")
         print(f"la defensa del obj es {personaje_principal.espada.defense}")
     print("----------------")
-    # realizar la impresion de los objetos equipados del personaje
 
     iniciar_juego()
 def crear_equipos():
