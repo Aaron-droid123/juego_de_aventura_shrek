@@ -178,6 +178,9 @@ def vender():
 
 
         if confirma == "cancelar":
+            menu_tienda()    
+            break
+        if confirma != "no" and confirma != "si":
             menu_tienda()
             break
     for list in inventario_total.objetos:
