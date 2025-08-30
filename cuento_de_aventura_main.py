@@ -1,3 +1,5 @@
+# contraseña: cuentodeaventura123
+# usuario: root
 import random
 import time
 import sys
