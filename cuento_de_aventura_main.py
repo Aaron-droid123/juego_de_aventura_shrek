@@ -3,11 +3,15 @@
 import random
 import time
 import sys
+import conexion_DB
 from cuento_de_Aventura_Shrek import Personaje, Objeto, Inventario, Enemigo
 from cuento_de_aventura_equipos import equipos_explorar, equipos_tienda
 stick = Objeto("espada stick", 2, 4, 1, "comun","equipos", 5)
-
-
+conexion_DB.cursor.execute("SELECT * FROM objeto")
+resultados = conexion_DB.cursor.fetchall()
+for fila in resultados:
+    print(fila)
+conexion_DB.close_db()
 nombre = input("ingresar nombre de tu personaje")
 while len(nombre) < 2:
     nombre = input("ingresar nombre de tu personaje")
