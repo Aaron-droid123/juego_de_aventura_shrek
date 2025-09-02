@@ -6,27 +6,23 @@ import sys
 import conexion_DB
 from cuento_de_Aventura_Shrek import Personaje, Objeto, Inventario, Enemigo
 from cuento_de_aventura_equipos import equipos_explorar, equipos_tienda
-stick = Objeto("espada stick", 2, 4, 1, "comun","equipos", 5)
-conexion_DB.cursor.execute("SELECT * FROM objeto")
+"""conexion_DB.cursor.execute("SELECT * FROM objeto")
 resultados = conexion_DB.cursor.fetchall()
 for fila in resultados:
     print(fila)
-conexion_DB.close_db()
-nombre = input("ingresar nombre de tu personaje")
-while len(nombre) < 2:
-    nombre = input("ingresar nombre de tu personaje")
-
+conexion_DB.close_db()"""
+# nombre = input("ingresar nombre de tu personaje")
+# while len(nombre) < 2:
+#    nombre = input("ingresar nombre de tu personaje")
 
 vida_total = 150
 ataque_total = 15
 defensa_total = 6
-personaje_principal = Personaje(nombre, vida_total, ataque_total, defensa_total,100, stick)
+
 tienda = equipos_tienda().equipo()
 def validar_input_cadenas(message):
     while True:
         mensaje = input(message)
-
-
         if not len(mensaje) < 2:
             print("cadena valido")
             return mensaje
@@ -47,7 +43,32 @@ def validar_input_opcion(max_opc):
             return opcion
         else:
             print("numero fuera de rango")
+def elegir_personaje():
+    print("<<<<BIENVENIDO AL JUEGO>>>>")
+    print("1. CREAR PERSONAJE")
+    print("2. USAR PERSONAJE")
+    opcion = validar_input_opcion(2)
+    if opcion == 1:
+        crear_personaje()
+    if opcion == 2:
+        pass
+def crear_personaje():
+    nombre = validar_input_cadenas("ingresar nombre de tu personaje")
+    stick = Objeto("espada stick", 2, 4, 1, "comun","equipos", 5)
+    quary = """INSERT INTO personaje(nombre, ataque, defensa, vida, monedas, casco, armadura, guantes, botas, espada, inventario) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s))"""
+    valores = (nombre, ataque_total, defensa_total, vida_total, 100, None, None, None, None, stick, None)
+    conexion_DB.cursor.execute(quary, valores)
+    conexion_DB.connection.commit()
+    resultados = conexion_DB.cursor.fetchall()
+    personaje_principal = Personaje(nombre, vida_total, ataque_total, defensa_total,100, stick)
+    # continuar con la insercion de personaje
+    
+    
+    
+    return personaje_principal
 
+def usar_personaje():
+    pass
 def iniciar_juego():
     menu_principal()
 
@@ -468,8 +489,8 @@ def crear_enemigos():
 
 
 
-
-
+elegir_personaje()
+iniciar_juego()
 global inventario_total
 inventario_total = Inventario()
 global equipos_lista
@@ -482,6 +503,7 @@ inventario_total.anadir_objeto(stick)
 inventario_total.anadir_objeto(Objeto("espada de plata", 5, 15, 8, "Raro","equipos", 1))
 inventario_total.anadir_objeto(Objeto("espada de madera", 0, 5, 4, "comun","equipos", 2))
 inventario_total.anadir_objeto(Objeto("espada de hierro", 15, 35, 18, "Excepcional","equipos", 3))
-iniciar_juego()
+
+personaje_principal = crear_personaje() 
 
 
