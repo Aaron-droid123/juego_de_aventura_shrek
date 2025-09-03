@@ -55,11 +55,11 @@ def elegir_personaje():
 def crear_personaje():
     nombre = validar_input_cadenas("ingresar nombre de tu personaje")
     stick = Objeto("espada stick", 2, 4, 1, "comun","equipos", 5)
-    quary = """INSERT INTO personaje(nombre, ataque, defensa, vida, monedas, casco, armadura, guantes, botas, espada, inventario) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s))"""
-    valores = (nombre, ataque_total, defensa_total, vida_total, 100, None, None, None, None, stick, None)
+    quary = """INSERT INTO personaje(nombre, ataque, defensa, vida, monedas, casco, armadura, guantes, botas, espada, inventarioID) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+    valores = (nombre, ataque_total, defensa_total, vida_total, 100, 0, 0, 0, 0, 0, 1)
     conexion_DB.cursor.execute(quary, valores)
-    conexion_DB.connection.commit()
-    resultados = conexion_DB.cursor.fetchall()
+    conexion_DB.conexion.commit()
+    # resultados = conexion_DB.cursor.fetchall()
     personaje_principal = Personaje(nombre, vida_total, ataque_total, defensa_total,100, stick)
     # continuar con la insercion de personaje
     
