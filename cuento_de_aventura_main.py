@@ -14,7 +14,7 @@ conexion_DB.close_db()"""
 # nombre = input("ingresar nombre de tu personaje")
 # while len(nombre) < 2:
 #    nombre = input("ingresar nombre de tu personaje")
-
+personaje_principal = ""
 vida_total = 150
 ataque_total = 15
 defensa_total = 6
@@ -41,17 +41,17 @@ def validar_input_opcion(max_opc):
         if 1 <= opcion <= max_opc:
             print("numero valido")
             return opcion
-        else:
-            print("numero fuera de rango")
-def elegir_personaje():
-    print("<<<<BIENVENIDO AL JUEGO>>>>")
-    print("1. CREAR PERSONAJE")
-    print("2. USAR PERSONAJE")
-    opcion = validar_input_opcion(2)
-    if opcion == 1:
-        crear_personaje()
+        else: 
+            print("numero fuera de rango") 
+def elegir_personaje(): 
+    print("<<<<BIENVENIDO AL JUEGO>>>>") 
+    print("1. CREAR PERSONAJE") 
+    print("2. USAR PERSONAJE") 
+    opcion = validar_input_opcion(2) 
+    if opcion == 1: 
+       personaje_principal = crear_personaje()
     if opcion == 2:
-        pass
+       personaje_principal = usar_personaje()
 def crear_personaje():
     nombre = validar_input_cadenas("ingresar nombre de tu personaje")
     stick = Objeto("espada stick", 2, 4, 1, "comun","equipos", 5)
@@ -59,16 +59,42 @@ def crear_personaje():
     valores = (nombre, ataque_total, defensa_total, vida_total, 100, 0, 0, 0, 0, 0, 1)
     conexion_DB.cursor.execute(quary, valores)
     conexion_DB.conexion.commit()
-    # resultados = conexion_DB.cursor.fetchall()
+    conexion_DB.close_db()
     personaje_principal = Personaje(nombre, vida_total, ataque_total, defensa_total,100, stick)
-    # continuar con la insercion de personaje
     
     
     
     return personaje_principal
 
+
+
+
 def usar_personaje():
-    pass
+    print("<<<<<PERSONAJES>>>>")
+    conexion_DB.cursor.execute("SELECT * FROM personaje")
+    resultados = conexion_DB.cursor.fetchall()
+    personaje_principal = ""
+    for fila in resultados:
+
+        print(f"nombre: {fila[1]}", end=' - ')
+        print(f"dano: {fila[2]}")
+    conexion_DB.close_db()
+    pregunta = validar_input_cadenas("ingrese el nombre del jugador que usara")
+    for personaje in resultados:
+        if personaje[1] == pregunta:
+            conexion_DB.cursor.execute("SELECT * FROM objeto")
+            resultados = conexion_DB.cursor.fetchall()
+            conexion_DB.close_db()
+            stick = ""
+            for lit in resultados:
+                if lit[0] == personaje[10]:
+                    stick = Objeto(lit[1], lit[2], lit[3], lit[4], lit[5], lit[6], lit[7])
+            personaje_principal =   Personaje(personaje[1], personaje[4], personaje[2], personaje[3],personaje[5], stick)
+    return personaje_principal
+
+# revisar la conexion de la linea 85
+
+
 def iniciar_juego():
     menu_principal()
 
@@ -504,6 +530,6 @@ inventario_total.anadir_objeto(Objeto("espada de plata", 5, 15, 8, "Raro","equip
 inventario_total.anadir_objeto(Objeto("espada de madera", 0, 5, 4, "comun","equipos", 2))
 inventario_total.anadir_objeto(Objeto("espada de hierro", 15, 35, 18, "Excepcional","equipos", 3))
 
-personaje_principal = crear_personaje() 
+# personaje_principal = crear_personaje() 
 
 
