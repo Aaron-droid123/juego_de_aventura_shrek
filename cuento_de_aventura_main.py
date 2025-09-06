@@ -15,6 +15,7 @@ conexion_DB.close_db()"""
 # while len(nombre) < 2:
 #    nombre = input("ingresar nombre de tu personaje")
 personaje_principal = ""
+enemigos_lista = ""
 vida_total = 150
 ataque_total = 15
 defensa_total = 6
@@ -44,6 +45,7 @@ def validar_input_opcion(max_opc):
         else: 
             print("numero fuera de rango") 
 def elegir_personaje(): 
+    global personaje_principal
     print("<<<<BIENVENIDO AL JUEGO>>>>") 
     print("1. CREAR PERSONAJE") 
     print("2. USAR PERSONAJE") 
@@ -78,7 +80,7 @@ def usar_personaje():
 
         print(f"nombre: {fila[1]}", end=' - ')
         print(f"dano: {fila[2]}")
-    conexion_DB.close_db()
+    # conexion_DB.close_db()
     pregunta = validar_input_cadenas("ingrese el nombre del jugador que usara")
     for personaje in resultados:
         if personaje[1] == pregunta:
@@ -516,15 +518,14 @@ def crear_enemigos():
 
 
 elegir_personaje()
-iniciar_juego()
-global inventario_total
-inventario_total = Inventario()
-global equipos_lista
-equipos_lista = crear_equipos()
-global comidas_lista
-comidas_lista = crear_comidas()
-global enemigos_lista
 enemigos_lista = crear_enemigos()
+comidas_lista = crear_comidas()
+equipos_lista = crear_equipos()
+inventario_total = Inventario()
+iniciar_juego()
+# global inventario_total
+# global comidas_lista
+# global enemigos_lista
 inventario_total.anadir_objeto(stick)
 inventario_total.anadir_objeto(Objeto("espada de plata", 5, 15, 8, "Raro","equipos", 1))
 inventario_total.anadir_objeto(Objeto("espada de madera", 0, 5, 4, "comun","equipos", 2))
