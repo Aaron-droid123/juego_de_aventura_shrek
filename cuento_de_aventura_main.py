@@ -58,18 +58,12 @@ def crear_personaje():
     nombre = validar_input_cadenas("ingresar nombre de tu personaje")
     stick = Objeto("espada stick", 2, 4, 1, "comun","equipos", 5)
     quary = """INSERT INTO personaje(nombre, ataque, defensa, vida, monedas, casco, armadura, guantes, botas, espada, inventarioID) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
-    valores = (nombre, ataque_total, defensa_total, vida_total, 100, 0, 0, 0, 0, 0, 1)
+    valores = (nombre, ataque_total, defensa_total, vida_total, 100, 0, 0, 0, 0, 1, 1)
     conexion_DB.cursor.execute(quary, valores)
     conexion_DB.conexion.commit()
     conexion_DB.close_db()
     personaje_principal = Personaje(nombre, vida_total, ataque_total, defensa_total,100, stick)
-    
-    
-    
     return personaje_principal
-
-
-
 
 def usar_personaje():
     print("<<<<<PERSONAJES>>>>")
@@ -77,7 +71,6 @@ def usar_personaje():
     resultados = conexion_DB.cursor.fetchall()
     personaje_principal = ""
     for fila in resultados:
-
         print(f"nombre: {fila[1]}", end=' - ')
         print(f"dano: {fila[2]}")
     # conexion_DB.close_db()
@@ -89,20 +82,19 @@ def usar_personaje():
             conexion_DB.close_db()
             stick = ""
             for lit in resultados:
+                print(personaje[10])
                 if lit[0] == personaje[10]:
                     stick = Objeto(lit[1], lit[2], lit[3], lit[4], lit[5], lit[6], lit[7])
-            personaje_principal =   Personaje(personaje[1], personaje[4], personaje[2], personaje[3],personaje[5], stick)
+            personaje_principal = Personaje(personaje[1], personaje[4], personaje[2], personaje[3],personaje[5], stick)
+    if personaje_principal == "":
+        print("ingrese un personaje correcto")
+        personaje_principal = usar_personaje()
+
     return personaje_principal
-
-# revisar la conexion de la linea 85
-
 
 def iniciar_juego():
     menu_principal()
-
-
-    opcion = validar_input_opcion(5)
-
+    opcion = validar_input_opcion(7)
     if opcion == 1:
         enemigo = personaje_principal.encontrar_enemigo(enemigos_lista)
         menu_explorar(enemigo)
