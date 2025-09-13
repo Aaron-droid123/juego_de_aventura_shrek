@@ -2,7 +2,7 @@ import time
 import random
 class Personaje:
 
-    def __init__(self, name, life, attack, defense, coins, sword):
+    def __init__(self, name, life, attack, defense, coins, sword, inventarioo):
         self.nombre = name
         self.vida = life
         self.ataque = attack
@@ -13,7 +13,7 @@ class Personaje:
         self.guantes = ""
         self.botas = ""
         self.espada = sword
-
+        self.inventario = inventarioo
     def __str__(self):
         return f"las estadisticas del jugador son:\n el ataque del personaje principal es {self.ataque},\n la defensa del personaje principal {self.defensa},\n la vida del personaje principal es {self.vida},\n y las monedas {self.monedas}"
     def atacar(self, enemigo):

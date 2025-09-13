@@ -54,15 +54,21 @@ def elegir_personaje():
        personaje_principal = crear_personaje()
     if opcion == 2:
        personaje_principal = usar_personaje()
+
 def crear_personaje():
+    quary= """INSERT INTO inventario(objetoID) VALUES(%s)"""
+    valores= (1,)
+    conexion_DB.cursor.execute(quary, valores)
+    conexion_DB.conexion.commit()
+    IDinventario = conexion_DB.cursor.lastrowid
     nombre = validar_input_cadenas("ingresar nombre de tu personaje")
     stick = Objeto("espada stick", 2, 4, 1, "comun","equipos", 5)
     quary = """INSERT INTO personaje(nombre, ataque, defensa, vida, monedas, casco, armadura, guantes, botas, espada, inventarioID) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
-    valores = (nombre, ataque_total, defensa_total, vida_total, 100, 0, 0, 0, 0, 1, 1)
+    valores = (nombre, ataque_total, defensa_total, vida_total, 100, 0, 0, 0, 0, 1, IDinventario)
     conexion_DB.cursor.execute(quary, valores)
     conexion_DB.conexion.commit()
     conexion_DB.close_db()
-    personaje_principal = Personaje(nombre, vida_total, ataque_total, defensa_total,100, stick)
+    personaje_principal = Personaje(nombre, vida_total, ataque_total, defensa_total,100, stick,IDinventario)
     return personaje_principal
 
 def usar_personaje():
@@ -82,10 +88,9 @@ def usar_personaje():
             conexion_DB.close_db()
             stick = ""
             for lit in resultados:
-                print(personaje[10])
-                if lit[0] == personaje[10]:
+                if int(lit[0]) == personaje[10]:
                     stick = Objeto(lit[1], lit[2], lit[3], lit[4], lit[5], lit[6], lit[7])
-            personaje_principal = Personaje(personaje[1], personaje[4], personaje[2], personaje[3],personaje[5], stick)
+            personaje_principal = Personaje(personaje[1], personaje[4], personaje[2], personaje[3],personaje[5], stick, personaje[11])
     if personaje_principal == "":
         print("ingrese un personaje correcto")
         personaje_principal = usar_personaje()
@@ -431,6 +436,7 @@ def mejorar_comida():
     inventario_total.objetos.append(comida1)
     menu_mostrar_objeto()
 def REVISAR_ESTADO():
+    # implementar el guardado de datos
     print("ESTADO ACTUAL:")
     print(personaje_principal)
     print("--------ITEMS--------")
@@ -466,8 +472,20 @@ def REVISAR_ESTADO():
         print(f"el ataque del obj. es {personaje_principal.espada.attack}")
         print(f"la defensa del obj es {personaje_principal.espada.defense}")
     print("----------------")
-
+    guardar_datos()
     iniciar_juego()
+def guardar_datos():
+    print(personaje_principal)
+    # obtener el ID de los objetos cuando asignamos a personaje principal, para poder guardar esos IDS junto con los datos de personaje_principal
+
+
+
+
+
+
+
+
+    print("GUARDADO EXITOSO")
 def crear_equipos():
     objeto_equipos = equipos_explorar().equipo()
     return objeto_equipos
