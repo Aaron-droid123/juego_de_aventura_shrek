@@ -58,6 +58,7 @@ def elegir_personaje():
 def crear_personaje():
     quary= """INSERT INTO inventario(objetoID) VALUES(%s)"""
     valores= (1,)
+    conexion_DB.conectar_db()
     conexion_DB.cursor.execute(quary, valores)
     conexion_DB.conexion.commit()
     IDinventario = conexion_DB.cursor.lastrowid
@@ -73,6 +74,7 @@ def crear_personaje():
 
 def usar_personaje():
     print("<<<<<PERSONAJES>>>>")
+    conexion_DB.conectar_db()
     conexion_DB.cursor.execute("SELECT * FROM personaje")
     resultados = conexion_DB.cursor.fetchall()
     personaje_principal = ""
@@ -477,8 +479,16 @@ def REVISAR_ESTADO():
 def guardar_datos():
     print(personaje_principal)
     # obtener el ID de los objetos cuando asignamos a personaje principal, para poder guardar esos IDS junto con los datos de personaje_principal
-
-
+    conexion_DB.reconectar_db()
+    curse = conexion_DB.conexion.cursor(dictionary= True)
+    curse.execute("SELECT * FROM personaje WHERE nombre = %s", (personaje_principal.nombre,))
+    resultados = curse.fetchone()
+    if not resultados:
+        print("sin resultados")
+    query = "UPDATE personaje SET ataque = %s,defensa = %s,vida = %s, monedas = %s WHERE nombre = %s"
+    curse.execute(query,(personaje_principal.ataque, personaje_principal.defensa, personaje_principal.vida, personaje_principal.monedas, personaje_principal.nombre))
+    conexion_DB.conexion.commit()
+    print("personaje actualizado correctamente")
 
 
 
