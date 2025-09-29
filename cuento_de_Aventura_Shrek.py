@@ -34,9 +34,10 @@ class Personaje:
                 break
 
     def encontrar_obj(self, lista, inventario_total):
-        lista_temp = random.choice(lista)
-        inventario_total.objetos.append(lista_temp)
-        print(f"usted ha ganado {lista_temp.name}")
+        item_temp = random.choice(lista)
+        inventario_total.objetos.append(item_temp)
+        print(f"usted ha ganado {item_temp.name}")
+        print(item_temp)
         return inventario_total
 
     def encontrar_enemigo(self, enemigos_lista):

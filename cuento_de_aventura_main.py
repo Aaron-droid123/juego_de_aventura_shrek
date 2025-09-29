@@ -477,7 +477,6 @@ def REVISAR_ESTADO():
     guardar_datos()
     iniciar_juego()
 def guardar_datos():
-    print(personaje_principal)
     # obtener el ID de los objetos cuando asignamos a personaje principal, para poder guardar esos IDS junto con los datos de personaje_principal
     conexion_DB.reconectar_db()
     curse = conexion_DB.conexion.cursor(dictionary= True)
@@ -535,13 +534,24 @@ def crear_enemigos():
     while i < random.randrange(50,300):enemigos.append(Enemigo("Oso",15,10,200)); i += 1
     return enemigos
 
-
-
+def construir_objs(lista):
+    var = []
+    for list in lista:
+        var.append(Objeto(list[1], list[2], list[3], list[4], list[5],list[6],list[7]))
+    return var
+def obtener_inv():
+    quary= """SELECT i.objetoID, i.nombre, i.vida, i.ataque, i.defensa, i.calidad, i.tipo, i.precio FROM inventario inv JOIN objeto i ON inv.objetoID = i.objetoID WHERE inv.inventario = 1"""
+    conexion_DB.conectar_db()
+    conexion_DB.cursor.execute(quary)
+    resultados = conexion_DB.cursor.fetchall()
+    resultados = construir_objs(resultados)
+    return resultados
 elegir_personaje()
 enemigos_lista = crear_enemigos()
 comidas_lista = crear_comidas()
 equipos_lista = crear_equipos()
 inventario_total = Inventario()
+inventario_total.objetos = obtener_inv()
 iniciar_juego()
 # global inventario_total
 # global comidas_lista
