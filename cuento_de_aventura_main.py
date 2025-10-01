@@ -56,20 +56,25 @@ def elegir_personaje():
        personaje_principal = usar_personaje()
 
 def crear_personaje():
-    quary= """INSERT INTO inventario(objetoID) VALUES(%s)"""
-    valores= (1,)
+    quary= """SELECT * FROM inventario ORDER BY inventario DESC LIMIT 1""" 
+    
+    conexion_DB.conectar_db()
+    conexion_DB.cursor.execute(quary)
+    resultados = conexion_DB.cursor.fetchall()
+    quary= """INSERT INTO inventario(inventario, objetoID) VALUES(%s, %s)"""
+    valores= (resultados[0][1] + 1,1)
     conexion_DB.conectar_db()
     conexion_DB.cursor.execute(quary, valores)
     conexion_DB.conexion.commit()
-    IDinventario = conexion_DB.cursor.lastrowid
+    # IDinventario = conexion_DB.cursor.lastrowid
     nombre = validar_input_cadenas("ingresar nombre de tu personaje")
     stick = Objeto("espada stick", 2, 4, 1, "comun","equipos", 5)
     quary = """INSERT INTO personaje(nombre, ataque, defensa, vida, monedas, casco, armadura, guantes, botas, espada, inventarioID) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
-    valores = (nombre, ataque_total, defensa_total, vida_total, 100, 0, 0, 0, 0, 1, IDinventario)
+    valores = (nombre, ataque_total, defensa_total, vida_total, 100, 0, 0, 0, 0, 1, resultados[0][1]+ 1)
     conexion_DB.cursor.execute(quary, valores)
     conexion_DB.conexion.commit()
     conexion_DB.close_db()
-    personaje_principal = Personaje(nombre, vida_total, ataque_total, defensa_total,100, stick,IDinventario)
+    personaje_principal = Personaje(nombre, vida_total, ataque_total, defensa_total,100, stick, resultados[0][1]+ 1)
     return personaje_principal
 
 def usar_personaje():
@@ -154,7 +159,6 @@ def victoria(enemigo):
         inventario_total = personaje_principal.encontrar_obj(comidas_lista, inventario_total)
         i += 1
     inventario_total = personaje_principal.encontrar_obj(equipos_lista, inventario_total)
-
 
     if enemigo.nombre == "Aldeano":
         personaje_principal.monedas += 10
@@ -540,11 +544,13 @@ def construir_objs(lista):
         var.append(Objeto(list[1], list[2], list[3], list[4], list[5],list[6],list[7]))
     return var
 def obtener_inv():
-    quary= """SELECT i.objetoID, i.nombre, i.vida, i.ataque, i.defensa, i.calidad, i.tipo, i.precio FROM inventario inv JOIN objeto i ON inv.objetoID = i.objetoID WHERE inv.inventario = 1"""
+    quary= f"""SELECT i.objetoID, i.nombre, i.vida, i.ataque, i.defensa, i.calidad, i.tipo, i.precio FROM inventario inv JOIN objeto i ON inv.objetoID = i.objetoID WHERE inv.inventario = {personaje_principal.inventario}""" 
+    
     conexion_DB.conectar_db()
     conexion_DB.cursor.execute(quary)
     resultados = conexion_DB.cursor.fetchall()
     resultados = construir_objs(resultados)
+
     return resultados
 elegir_personaje()
 enemigos_lista = crear_enemigos()
