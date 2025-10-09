@@ -1,5 +1,6 @@
 import time
 import random
+import conexion_DB
 class Personaje:
 
     def __init__(self, name, life, attack, defense, coins, sword, inventarioo):
@@ -35,9 +36,19 @@ class Personaje:
 
     def encontrar_obj(self, lista, inventario_total):
         item_temp = random.choice(lista)
+        quary= """SELECT COUNT(*) FROM objeto WHERE nombre = %s AND calidad = %s"""
+        conexion_DB.conectar_db()
+        conexion_DB.cursor.execute(quary, (item_temp.name, item_temp.quality))
+        resultado = conexion_DB.cursor.fetchall()
+        existe = resultado[0][0] > 0
+        # modificar el select count para obtener el ID del objeto, y porsteriormente guardarlo
+        #quary= """INSERT INTO inventario(inventario, objetoID) VALUES(%s, %s)"""
+        """valores= (resultados[0][1] + 1,1)
+        conexion_DB.conectar_db()
+        conexion_DB.cursor.execute(quary, valores)
+        conexion_DB.conexion.commit()"""
         inventario_total.objetos.append(item_temp)
         print(f"usted ha ganado {item_temp.name}")
-        print(item_temp)
         return inventario_total
 
     def encontrar_enemigo(self, enemigos_lista):
