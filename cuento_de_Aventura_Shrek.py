@@ -34,7 +34,7 @@ class Personaje:
                 self.vida = vida_total
                 break
 
-    def encontrar_obj(self, lista, inventario_total):
+    def encontrar_obj(self, lista, inventario_total, Pinventario):
         item_temp = random.choice(lista)
         quary= """SELECT * FROM objeto WHERE nombre = %s AND calidad = %s"""
         conexion_DB.conectar_db()
@@ -44,7 +44,11 @@ class Personaje:
         #    resultado = 0
         existe = len(resultado) > 0
         if existe:
-            pass
+            quary= """INSERT INTO inventario(inventario, objetoID) VALUES(%s, %s)"""
+            valores= (Pinventario, resultado[0][0])
+            conexion_DB.conectar_db()
+            conexion_DB.cursor.execute(quary, valores)
+            conexion_DB.conexion.commit()
         else:
             
             quary= """INSERT INTO objeto(nombre, vida, ataque, defensa, calidad, tipo, precio) VALUES(%s, %s, %s, %s, %s, %s, %s)"""

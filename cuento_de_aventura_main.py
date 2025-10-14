@@ -156,10 +156,9 @@ def victoria(enemigo):
     global inventario_total
     rand = random.randrange(1, 10)
     while i < rand:
-        inventario_total = personaje_principal.encontrar_obj(comidas_lista, inventario_total)
+        inventario_total = personaje_principal.encontrar_obj(comidas_lista, inventario_total, personaje_principal.inventario)
         i += 1
-    inventario_total = personaje_principal.encontrar_obj(equipos_lista, inventario_total)
-
+    inventario_total = personaje_principal.encontrar_obj(equipos_lista, inventario_total, personaje_principal.inventario)
     if enemigo.nombre == "Aldeano":
         personaje_principal.monedas += 10
         print("ganaste 10 monedas")
