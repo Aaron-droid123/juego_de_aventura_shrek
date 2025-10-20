@@ -34,7 +34,7 @@ class Personaje:
                 self.vida = vida_total
                 break
 
-    def encontrar_obj(self, lista, inventario_total, Pinventario):
+    def encontrar_obj(self, lista, inventario_total, Personaje_inventario):
         item_temp = random.choice(lista)
         quary= """SELECT * FROM objeto WHERE nombre = %s AND calidad = %s"""
         conexion_DB.conectar_db()
@@ -45,7 +45,7 @@ class Personaje:
         existe = len(resultado) > 0
         if existe:
             quary= """INSERT INTO inventario(inventario, objetoID) VALUES(%s, %s)"""
-            valores= (Pinventario, resultado[0][0])
+            valores= (Personaje_inventario, resultado[0][0])
             conexion_DB.conectar_db()
             conexion_DB.cursor.execute(quary, valores)
             conexion_DB.conexion.commit()
@@ -53,6 +53,14 @@ class Personaje:
             
             quary= """INSERT INTO objeto(nombre, vida, ataque, defensa, calidad, tipo, precio) VALUES(%s, %s, %s, %s, %s, %s, %s)"""
             valores= (item_temp.name,item_temp.life, item_temp.attack, item_temp.defense, item_temp.quality, item_temp.type, item_temp.price)
+            conexion_DB.conectar_db()
+            conexion_DB.cursor.execute(quary, valores)
+            conexion_DB.conexion.commit()
+            IDitem = conexion_DB.cursor.lastrowid
+
+            # aqui va el codigo de guardar en inventario los objetos no-repetidos
+            quary = """INSERT INTO inventario(inventario, objetoID) VALUES(%s, %s)"""
+            valores = (Personaje_inventario, IDitem)
             conexion_DB.conectar_db()
             conexion_DB.cursor.execute(quary, valores)
             conexion_DB.conexion.commit()
