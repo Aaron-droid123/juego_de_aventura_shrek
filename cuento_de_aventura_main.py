@@ -303,21 +303,53 @@ def comprar():
         objeto_a_comprar = validar_input_cadenas("ingresar nombre del objeto que desea comprar")
         if objeto_a_comprar == "cancelar":
             menu_tienda()
-        objeto_encontrado = ""
+        objeto_comprado = ""
         while True:
             for list in tienda:
                 if objeto_a_comprar == list.name:
-                    objeto_encontrado = list
+                    objeto_comprado = list
                     break
-            if objeto_encontrado == "":
+            if objeto_comprado == "":
                 objeto_a_comprar = validar_input_cadenas("ingresar nombre del objeto que desea comprar")
                 if objeto_a_comprar == "cancelar":
                     menu_tienda()
             else:
                 break
-        if personaje_principal.monedas >= objeto_encontrado.price:
-            objeto_encontrado.comprar_objeto(personaje_principal)
-            inventario_total.objetos.append(objeto_encontrado)
+        if personaje_principal.monedas >= objeto_comprado.price:
+            
+            objeto_comprado.comprar_objeto(personaje_principal)
+            inventario_total.objetos.append(objeto_comprado)
+
+
+            
+            quary = """SELECT * FROM objeto WHERE nombre = %s"""
+            conexion_DB.conectar_db()
+            conexion_DB.cursor.execute(quary, (objeto_comprado.name, ))
+            resultado = conexion_DB.cursor.fetchall()
+
+            existe = len(resultado) > 0
+            if existe:
+                quary = """INSERT INTO inventario(inventario, objetoID) VALUES (%s, %s)"""
+                valores = (personaje_principal.inventario, resultado[0][0])
+                conexion_DB.conectar_db()
+                conexion_DB.cursor.execute(quary, valores)
+                conexion_DB.conexion.commit()
+                print(len(resultado))
+
+            else:
+                quary = """INSERT INTO objeto(nombre, vida, ataque, defensa, calidad, tipo, precio) VALUES (%s, %s, %s ,%s , %s, %s, %s)"""
+                valores = (objeto_comprado.name, objeto_comprado.life, objeto_comprado.attack, objeto_comprado.defense, objeto_comprado.quality, objeto_comprado.type, objeto_comprado.price)
+                conexion_DB.conectar_db()
+                conexion_DB.cursor.execute(quary, valores)
+                conexion_DB.conexion.commit()
+                IDitem = conexion_DB.cursor.lastrowid
+                
+                quary = """INSERT INTO inventario(inventario, objetoID) VALUES (%s, %s)"""
+                valores = (personaje_principal.inventario, IDitem)
+                conexion_DB.conectar_db()
+                conexion_DB.cursor.execute(quary, valores)
+                conexion_DB.conexion.commit()
+            # continuar la implementacion de las quary's
             print("<<<<SU COMPRA HA SIDO EXITOSA>>>>")
             print()
             menu_tienda()
