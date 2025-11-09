@@ -201,19 +201,40 @@ class Objeto:
 
     def comprar_objeto(self, personaje_principal):
         personaje_principal.monedas -= self.price
+        
+
 
 class Inventario:
 
     def __init__(self):
         self.objetos = []
 
-    def anadir_objeto(self, obj):
+    def anadir_objeto(self, obj, inventario):
         self.objetos.append(obj)
-    def retirar_objeto(self, obj):
+        quary = """SELECT * FROM objeto WHERE nombre = %s"""
+        conexion_DB.conectar_db()
+        conexion_DB.cursor.execute(quary, (obj.name, ))
+        resultados = conexion_DB.cursor.fetchall()
+
+        query = """INSERT INTO inventario(inventario, objetoID) VALUES(%s, %s)"""
+        conexion_DB.conectar_db()
+        conexion_DB.cursor.execute(query, (inventario, resultados[0][0]))
+        conexion_DB.conexion.commit()
+
+    def retirar_objeto(self, obj, inventariooo):
         self.objetos.remove(obj)
+        quary= """SELECT * FROM objeto WHERE nombre = %s""" 
+        conexion_DB.conectar_db()
+        conexion_DB.cursor.execute(quary, (obj.name, ))
+        resultados = conexion_DB.cursor.fetchall()
 
+        query = """DELETE FROM inventario WHERE inventario = %s AND objetoID = %s"""
+        conexion_DB.conectar_db()
+        objID = resultados[0][0]
+        conexion_DB.cursor.execute(query, (inventariooo, objID))
+        conexion_DB.conexion.commit()
+        
 class Enemigo:
-
     def __init__(self, name, attack, defense, life):
         self.nombre = name
         self.ataque = attack

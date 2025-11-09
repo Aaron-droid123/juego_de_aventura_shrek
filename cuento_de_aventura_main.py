@@ -118,6 +118,7 @@ def iniciar_juego():
         menu_inventario()
     elif opcion == 5:
         personaje_principal.curar_vida(vida_total)
+        guardar_datos()
         print(personaje_principal)
         iniciar_juego()
 
@@ -176,7 +177,9 @@ def victoria(enemigo):
         print("ganaste 50 monedas")
 
     enemigos_lista.remove(enemigo)
+    guardar_datos()
     del enemigo
+
 
 
 
@@ -300,6 +303,7 @@ def comprar():
                 print(list)
         comprar()
     if opcion == 2:
+        # solucionar el bug de restar monedas al comprar
         objeto_a_comprar = validar_input_cadenas("ingresar nombre del objeto que desea comprar")
         if objeto_a_comprar == "cancelar":
             menu_tienda()
@@ -319,9 +323,10 @@ def comprar():
             
             objeto_comprado.comprar_objeto(personaje_principal)
             inventario_total.objetos.append(objeto_comprado)
+            guardar_datos()
 
 
-            
+
             quary = """SELECT * FROM objeto WHERE nombre = %s"""
             conexion_DB.conectar_db()
             conexion_DB.cursor.execute(quary, (objeto_comprado.name, ))
@@ -429,8 +434,9 @@ def equipar_objeto():
     if equipo == "":
         print(f"no se ha encontrado el equipo {equipo_nombre}")
         menu_mostrar_objeto()
-    inventario_total.retirar_objeto(equipo)
+    inventario_total.retirar_objeto(equipo, personaje_principal.inventario)
     equipo_ant = personaje_principal.equipar(equipo)
+    # tomar en cuenta la quary de update para equipar()
     global vida_total
     vida_total += equipo.life
     global ataque_total
@@ -441,8 +447,8 @@ def equipar_objeto():
         vida_total -= equipo_ant.life
         ataque_total -= equipo_ant.attack
         defensa_total -= equipo_ant.defense
-        inventario_total.anadir_objeto(equipo_ant)
-
+        inventario_total.anadir_objeto(equipo_ant, personaje_principal.inventario)
+        # tomar en cuenta la quary para insertar en anadir_objeto()
     menu_mostrar_objeto()
     
 def mejorar_comida():
@@ -576,7 +582,6 @@ def construir_objs(lista):
     return var
 def obtener_inv():
     quary= f"""SELECT i.objetoID, i.nombre, i.vida, i.ataque, i.defensa, i.calidad, i.tipo, i.precio FROM inventario inv JOIN objeto i ON inv.objetoID = i.objetoID WHERE inv.inventario = {personaje_principal.inventario}""" 
-    
     conexion_DB.conectar_db()
     conexion_DB.cursor.execute(quary)
     resultados = conexion_DB.cursor.fetchall()
