@@ -97,7 +97,7 @@ def usar_personaje():
             for lit in resultados:
                 if int(lit[0]) == personaje[10]:
                     stick = Objeto(lit[1], lit[2], lit[3], lit[4], lit[5], lit[6], lit[7])
-            personaje_principal = Personaje(personaje[1], personaje[4], personaje[2], personaje[3],personaje[5], stick, personaje[11])
+            personaje_principal = Personaje(personaje[1], personaje[4], personaje[2], personaje[3], personaje[5], personaje[6], personaje[7], personaje[8], personaje[9], stick, personaje[11])
     if personaje_principal == "":
         print("ingrese un personaje correcto")
         personaje_principal = usar_personaje()
@@ -434,9 +434,14 @@ def equipar_objeto():
     if equipo == "":
         print(f"no se ha encontrado el equipo {equipo_nombre}")
         menu_mostrar_objeto()
-    inventario_total.retirar_objeto(equipo, personaje_principal.inventario)
-    equipo_ant = personaje_principal.equipar(equipo)
-    # tomar en cuenta la quary de update para equipar()
+    objID = inventario_total.retirar_objeto(equipo, personaje_principal.inventario)
+    equipo_ant = personaje_principal.equipar(equipo, objID)
+    # tomar en cuenta la quary de update para equipar() 
+    query = "UPDATE personaje SET ataque = %s, defensa = %s, vida = %s, monedas = %s, casco = %s, armadura = %s, guantes = %s, botas = %s, espada = %s WHERE nombre = %s" 
+    values = (personaje_principal.ataque, personaje_principal.defensa, personaje_principal.vida, personaje_principal.monedas, personaje_principal.casco, personaje_principal.armadura, personaje_principal.guantes, personaje_principal.botas, personaje_principal.espada, personaje_principal.nombre)
+    conexion_DB.cursor.execute(query, values)
+    conexion_DB.conexion.commit()
+    print("objeto equipado correctamente")
     global vida_total
     vida_total += equipo.life
     global ataque_total
@@ -448,7 +453,6 @@ def equipar_objeto():
         ataque_total -= equipo_ant.attack
         defensa_total -= equipo_ant.defense
         inventario_total.anadir_objeto(equipo_ant, personaje_principal.inventario)
-        # tomar en cuenta la quary para insertar en anadir_objeto()
     menu_mostrar_objeto()
     
 def mejorar_comida():
@@ -483,32 +487,38 @@ def REVISAR_ESTADO():
     print("ESTADO ACTUAL:")
     print(personaje_principal)
     print("--------ITEMS--------")
-    if not personaje_principal.casco == "":
+    if not personaje_principal.casco == "" or personaje_principal.casco == 0:
         print("")
         print(f"el nombre del obj. es {personaje_principal.casco.name}")
         print(f"la vida del obj. es {personaje_principal.casco.life}")
         print(f"el ataque del obj. es {personaje_principal.casco.attack}")
         print(f"la defensa del obj es {personaje_principal.casco.defense}")
 
-    if not personaje_principal.armadura == "":
+    if not personaje_principal.armadura == "" or personaje_principal.armadura == 0:
+        quary = """SELECT * FROM objeto WHERE objetoID = %s"""
+        conexion_DB.conectar_db()
+        conexion_DB.cursor.execute(quary, (personaje_principal.armadura, ))
+        resultado = conexion_DB.cursor.fetchall()
+
         print("")
-        print(f"el nombre del obj. es {personaje_principal.armadura.name}")
-        print(f"la vida del obj. es {personaje_principal.armadura.life}")
-        print(f"el ataque del obj. es {personaje_principal.armadura.attack}")
-        print(f"la defensa del obj es {personaje_principal.armadura.defense}")
-    if not personaje_principal.guantes == "":
+        print(f"el nombre del obj. es {resultado[0][1]}")
+        print(f"la vida del obj. es {resultado[0][2]}")
+        print(f"el ataque del obj. es {resultado[0][3]}")
+        print(f"la defensa del obj es {resultado[0][4]}")
+        
+    if not personaje_principal.guantes == "" or personaje_principal.guantes == 0:
         print("")
         print(f"el nombre del obj. es {personaje_principal.guantes.name}")
         print(f"la vida del obj. es {personaje_principal.guantes.life}")
         print(f"el ataque del obj. es {personaje_principal.guantes.attack}")
         print(f"la defensa del obj es {personaje_principal.guantes.defense}")
-    if not personaje_principal.botas == "":
+    if not personaje_principal.botas == "" or personaje_principal.botas == 0:
         print("")
         print(f"el nombre del obj. es {personaje_principal.botas.name}")
         print(f"la vida del obj. es {personaje_principal.botas.life}")
         print(f"el ataque del obj. es {personaje_principal.botas.attack}")
         print(f"la defensa del obj es {personaje_principal.botas.defense}")
-    if not personaje_principal.espada == "":
+    if not personaje_principal.espada == "" or personaje_principal.espada == 0:
         print("")
         print(f"el nombre del obj. es {personaje_principal.espada.name}")
         print(f"la vida del obj. es {personaje_principal.espada.life}")

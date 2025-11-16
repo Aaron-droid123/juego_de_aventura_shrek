@@ -3,16 +3,16 @@ import random
 import conexion_DB
 class Personaje:
 
-    def __init__(self, name, life, attack, defense, coins, sword, inventarioo):
+    def __init__(self, name, life, attack, defense, coins, hat, armor, gloves, boots, sword, inventarioo):
         self.nombre = name
         self.vida = life
         self.ataque = attack
         self.defensa = defense
         self.monedas = coins
-        self.casco = ""
-        self.armadura = ""
-        self.guantes = ""
-        self.botas = ""
+        self.casco = hat
+        self.armadura = armor
+        self.guantes = gloves
+        self.botas = boots
         self.espada = sword
         self.inventario = inventarioo
     def __str__(self):
@@ -72,16 +72,17 @@ class Personaje:
         return random.choice(enemigos_lista)
 
 
-    def equipar(self, equipo):
+    def equipar(self, equipo, objID):
+
         if equipo.name.rfind("casco") == 0:
-            if self.casco == "":
-                self.casco = equipo
+            if self.casco == "" or self.casco == 0:
+                self.casco = objID
                 self.vida += equipo.life
                 self.ataque += equipo.attack
                 self.defensa += equipo.defense
             else:
                 casco_temp = self.casco
-                self.casco = equipo
+                self.casco = objID
                 self.vida += equipo.life
                 self.ataque += equipo.attack
                 self.defensa += equipo.defense
@@ -90,30 +91,36 @@ class Personaje:
                 self.defensa -= casco_temp.defense
                 return casco_temp
         elif equipo.name.rfind("armadura") == 0:
-            if self.armadura == "":
-                self.armadura = equipo
+
+            if self.armadura == "" or self.armadura == 0:
+                self.armadura = objID
                 self.vida += equipo.life
                 self.ataque += equipo.attack
                 self.defensa += equipo.defense
             else:
                 armadura_temp = self.armadura
-                self.armadura = equipo
+                quary = """SELECT * FROM objeto WHERE objetoID = %s"""
+                conexion_DB.conectar_db()
+                conexion_DB.cursor.execute(quary, (armadura_temp, ))
+                resultado = conexion_DB.cursor.fetchall()
+                self.armadura = objID
                 self.vida += equipo.life
                 self.ataque += equipo.attack
                 self.defensa += equipo.defense
-                self.vida -= armadura_temp.life
-                self.ataque -= armadura_temp.attack
-                self.defensa -= armadura_temp.defense
+                self.vida -= resultado[0][2]
+                self.ataque -= resultado[0][3]
+                self.defensa -= resultado[0][4]
+                # reconstruir armadura_temp a un obj.
                 return armadura_temp
         elif equipo.name.rfind("guantes") == 0:
-            if self.guantes == "":
-                self.guantes = equipo
+            if self.guantes == "" or self.guantes == 0:
+                self.guantes = objID
                 self.vida += equipo.life
                 self.ataque += equipo.attack
                 self.defensa += equipo.defense
             else:
                 guantes_temp = self.guantes
-                self.guantes = equipo
+                self.guantes = objID
                 self.vida += equipo.life
                 self.ataque += equipo.attack
                 self.defensa += equipo.defense
@@ -122,14 +129,14 @@ class Personaje:
                 self.defensa -= guantes_temp.defense
                 return guantes_temp
         elif equipo.name.rfind("botas") == 0:
-            if self.botas == "":
-                self.botas = equipo
+            if self.botas == "" or self.botas == 0:
+                self.botas = objID
                 self.vida += equipo.life
                 self.ataque += equipo.attack
                 self.defensa += equipo.defense
             else:
                 botas_temp = self.botas
-                self.botas = equipo
+                self.botas = objID
                 self.vida += equipo.life
                 self.ataque += equipo.attack
                 self.defensa += equipo.defense
@@ -138,14 +145,14 @@ class Personaje:
                 self.defensa -= botas_temp.defense
                 return  botas_temp
         elif equipo.name.rfind("espada") == 0:
-            if self.espada == "":
-                self.espada = equipo
+            if self.espada == "" or self.espada == 0:
+                self.espada = objID
                 self.vida += equipo.life
                 self.ataque += equipo.attack
                 self.defensa += equipo.defense
             else:
                 espada_temp = self.espada
-                self.espada = equipo
+                self.espada = objID
                 self.vida += equipo.life
                 self.ataque += equipo.attack
                 self.defensa += equipo.defense
@@ -233,7 +240,7 @@ class Inventario:
         objID = resultados[0][0]
         conexion_DB.cursor.execute(query, (inventariooo, objID))
         conexion_DB.conexion.commit()
-        
+        return objID
 class Enemigo:
     def __init__(self, name, attack, defense, life):
         self.nombre = name
