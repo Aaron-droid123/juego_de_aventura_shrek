@@ -488,11 +488,16 @@ def REVISAR_ESTADO():
     print(personaje_principal)
     print("--------ITEMS--------")
     if not personaje_principal.casco == "" or personaje_principal.casco == 0:
+        quary = """SELECT * FROM objeto WHERE objetoID = %s"""
+        conexion_DB.conectar_db()
+        conexion_DB.cursor.execute(quary, (personaje_principal.casco, ))
+        resultado = conexion_DB.cursor.fetchall()
+        
         print("")
-        print(f"el nombre del obj. es {personaje_principal.casco.name}")
-        print(f"la vida del obj. es {personaje_principal.casco.life}")
-        print(f"el ataque del obj. es {personaje_principal.casco.attack}")
-        print(f"la defensa del obj es {personaje_principal.casco.defense}")
+        print(f"el nombre del obj. es {resultado[0][1]}")
+        print(f"la vida del obj. es {resultado[0][2]}")
+        print(f"el ataque del obj. es {resultado[0][3]}")
+        print(f"la defensa del obj es {resultado[0][4]}")
 
     if not personaje_principal.armadura == "" or personaje_principal.armadura == 0:
         quary = """SELECT * FROM objeto WHERE objetoID = %s"""
@@ -507,28 +512,42 @@ def REVISAR_ESTADO():
         print(f"la defensa del obj es {resultado[0][4]}")
         
     if not personaje_principal.guantes == "" or personaje_principal.guantes == 0:
+        quary = """SELECT * FROM objeto WHERE objetoID = %s"""
+        conexion_DB.conectar_db()
+        conexion_DB.cursor.execute(quary, (personaje_principal.guantes, ))    
+        resultado = conexion_DB.cursor.fetchall()
+        
         print("")
-        print(f"el nombre del obj. es {personaje_principal.guantes.name}")
-        print(f"la vida del obj. es {personaje_principal.guantes.life}")
-        print(f"el ataque del obj. es {personaje_principal.guantes.attack}")
-        print(f"la defensa del obj es {personaje_principal.guantes.defense}")
+        print(f"el nombre del obj. es {resultado[0][1]}")
+        print(f"la vida del obj. es {resultado[0][2]}")
+        print(f"el ataque del obj. es {resultado[0][3]}")
+        print(f"la defensa del obj es {resultado[0][4]}")
     if not personaje_principal.botas == "" or personaje_principal.botas == 0:
+        quary = """SELECT * FROM objeto WHERE objetoID = %s"""
+        conexion_DB.conectar_db()
+        conexion_DB.cursor.execute(quary, (personaje_principal.botas, ))
+        resultado = conexion_DB.cursor.fetchall()
+
         print("")
-        print(f"el nombre del obj. es {personaje_principal.botas.name}")
-        print(f"la vida del obj. es {personaje_principal.botas.life}")
-        print(f"el ataque del obj. es {personaje_principal.botas.attack}")
-        print(f"la defensa del obj es {personaje_principal.botas.defense}")
+        print(f"el nombre del obj. es {resultado[0][1]}")
+        print(f"la vida del obj. es {resultado[0][2]}")
+        print(f"el ataque del obj. es {resultado[0][3]}")
+        print(f"la defensa del obj es {resultado[0][4]}")
     if not personaje_principal.espada == "" or personaje_principal.espada == 0:
+        quary = """SELECT * FROM objeto WHERE objetoID = %s"""
+        conexion_DB.conectar_db()
+        conexion_DB.cursor.execute(quary, (personaje_principal.espada, ))
+        resultado = conexion_DB.cursor.fetchall()
+
         print("")
-        print(f"el nombre del obj. es {personaje_principal.espada.name}")
-        print(f"la vida del obj. es {personaje_principal.espada.life}")
-        print(f"el ataque del obj. es {personaje_principal.espada.attack}")
-        print(f"la defensa del obj es {personaje_principal.espada.defense}")
+        print(f"el nombre del obj. es {resultado[0][1]}")
+        print(f"la vida del obj. es {resultado[0][2]}")
+        print(f"el ataque del obj. es {resultado[0][3]}")
+        print(f"la defensa del obj es {resultado[0][4]}")
     print("----------------")
     guardar_datos()
     iniciar_juego()
 def guardar_datos():
-    # obtener el ID de los objetos cuando asignamos a personaje principal, para poder guardar esos IDS junto con los datos de personaje_principal
     conexion_DB.reconectar_db()
     curse = conexion_DB.conexion.cursor(dictionary= True)
     curse.execute("SELECT * FROM personaje WHERE nombre = %s", (personaje_principal.nombre,))

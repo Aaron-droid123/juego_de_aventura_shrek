@@ -34,7 +34,7 @@ class equipos_explorar:
             i += 1
         i = 0
         while i < random.randrange(1,5):
-            self.ITEMS.append(Objeto("Casco de oro", 20, 8, 25, "Mitico","equipos",30))
+            self.ITEMS.append(Objeto("casco de oro", 20, 8, 25, "Mitico","equipos",30))
             self.ITEMS.append(Objeto("armadura de oro", 50, 8, 55, "Mitico","equipos",30))
             self.ITEMS.append(Objeto("guantes de oro", 20, 8, 25, "Mitico","equipos",32))
             self.ITEMS.append(Objeto("botas de oro", 10, 15, 15, "Mitico","equipos",34))

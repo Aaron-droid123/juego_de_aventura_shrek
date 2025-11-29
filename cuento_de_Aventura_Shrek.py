@@ -82,13 +82,18 @@ class Personaje:
                 self.defensa += equipo.defense
             else:
                 casco_temp = self.casco
+                quary = """SELECT * FROM objeto WHERE objetoID = %s"""
+                conexion_DB.conectar_db()
+                conexion_DB.cursor.execute(quary, (casco_temp, ))
+                resultado = conexion_DB.cursor.fetchall()
                 self.casco = objID
                 self.vida += equipo.life
                 self.ataque += equipo.attack
                 self.defensa += equipo.defense
-                self.vida -= casco_temp.life
-                self.ataque -= casco_temp.attack
-                self.defensa -= casco_temp.defense
+                self.vida -= resultado[0][2]
+                self.ataque -= resultado[0][3]
+                self.defensa -= resultado[0][4]
+                casco_temp = Objeto(resultado[0][1], resultado[0][2], resultado[0][3], resultado[0][4], resultado[0][5], resultado[0][6], resultado[0][7])
                 return casco_temp
         elif equipo.name.rfind("armadura") == 0:
 
@@ -111,6 +116,7 @@ class Personaje:
                 self.ataque -= resultado[0][3]
                 self.defensa -= resultado[0][4]
                 # reconstruir armadura_temp a un obj.
+                armadura_temp = Objeto(resultado[0][1], resultado[0][2], resultado[0][3], resultado[0][4], resultado[0][5], resultado[0][6], resultado[0][7])
                 return armadura_temp
         elif equipo.name.rfind("guantes") == 0:
             if self.guantes == "" or self.guantes == 0:
@@ -120,13 +126,18 @@ class Personaje:
                 self.defensa += equipo.defense
             else:
                 guantes_temp = self.guantes
+                quary = """SELECT * FROM objeto WHERE objetoID = %s"""
+                conexion_DB.conectar_db()
+                conexion_DB.cursor.execute(quary, (guantes_temp, ))
+                resultado = conexion_DB.cursor.fetchall()
                 self.guantes = objID
                 self.vida += equipo.life
                 self.ataque += equipo.attack
                 self.defensa += equipo.defense
-                self.vida -= guantes_temp.life
-                self.ataque -= guantes_temp.attack
-                self.defensa -= guantes_temp.defense
+                self.vida -= resultado[0][2]
+                self.ataque -= resultado[0][3]
+                self.defensa -= resultado[0][4]
+                guantes_temp = Objeto(resultado[0][1], resultado[0][2], resultado[0][3], resultado[0][4], resultado[0][5], resultado[0][6], resultado[0][7])
                 return guantes_temp
         elif equipo.name.rfind("botas") == 0:
             if self.botas == "" or self.botas == 0:
@@ -136,13 +147,18 @@ class Personaje:
                 self.defensa += equipo.defense
             else:
                 botas_temp = self.botas
+                quary = """SELECT * FROM objeto WHERE objetoID = %s"""
+                conexion_DB.conectar_db()
+                conexion_DB.cursor.execute(quary, (botas_temp, ))
+                resultado = conexion_DB.cursor.fetchall()
                 self.botas = objID
                 self.vida += equipo.life
                 self.ataque += equipo.attack
                 self.defensa += equipo.defense
-                self.vida -= botas_temp.life
-                self.ataque -= botas_temp.attack
-                self.defensa -= botas_temp.defense
+                self.vida -= resultado[0][2]
+                self.ataque -= resultado[0][3]
+                self.defensa -= resultado[0][4]
+                botas_temp = Objeto(resultado[0][1], resultado[0][2], resultado[0][3], resultado[0][4], resultado[0][5], resultado[0][6], resultado[0][7])
                 return  botas_temp
         elif equipo.name.rfind("espada") == 0:
             if self.espada == "" or self.espada == 0:
@@ -152,13 +168,18 @@ class Personaje:
                 self.defensa += equipo.defense
             else:
                 espada_temp = self.espada
+                quary = """SELECT * FROM objeto WHERE objetoID = %s"""
+                conexion_DB.conectar_db()
+                conexion_DB.cursor.execute(quary, (espada_temp, ))
+                resultado = conexion_DB.cursor.fetchall()
                 self.espada = objID
                 self.vida += equipo.life
                 self.ataque += equipo.attack
                 self.defensa += equipo.defense
-                self.vida -= espada_temp.life
-                self.ataque -= espada_temp.attack
-                self.defensa -= espada_temp.defense
+                self.vida -= resultado[0][2]
+                self.ataque -= resultado[0][3]
+                self.defensa -= resultado[0][4]
+                espada_temp = Objeto(resultado[0][1], resultado[0][2], resultado[0][3], resultado[0][4], resultado[0][5], resultado[0][6], resultado[0][7])
                 return espada_temp
 
 
