@@ -472,14 +472,16 @@ def mejorar_comida():
     if contador <= 1:
         print("comida insuficiente para mejorarla")
         menu_mostrar_objeto()
-    inventario_total.objetos.remove(comida1)
-    inventario_total.objetos.remove(comida2)
-    del comida2
-    if comida1.quality == "Leyenda":
-        print("no se puede mejorar la calidad 'Leyenda'")
-        menu_mostrar_objeto()
+    if comida1.quality == "Leyenda": 
+        print("no se puede mejorar la calidad 'Leyenda'") 
+        menu_mostrar_objeto() 
     else:
+        inventario_total.objetos.remove(comida1)
+        inventario_total.objetos.remove(comida2)
         comida1.combinar_objeto()
+
+
+    del comida2
     inventario_total.objetos.append(comida1)
     menu_mostrar_objeto()
 def REVISAR_ESTADO():
