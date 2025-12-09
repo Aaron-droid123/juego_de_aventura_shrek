@@ -476,10 +476,32 @@ def mejorar_comida():
         print("no se puede mejorar la calidad 'Leyenda'") 
         menu_mostrar_objeto() 
     else:
+        quary = """SELECT * FROM objeto WHERE nombre = %s AND calidad = %s"""
+        conexion_DB.conectar_db()
+        conexion_DB.cursor.execute(quary, (comida1.name, comida1.quality))
+        resultado = conexion_DB.cursor.fetchall()
+
+        query = """DELETE FROM inventario WHERE inventario = %s AND objetoID = %s LIMIT 1"""
+        conexion_DB.conectar_db()
+        objID = resultado[0][0]
+        conexion_DB.cursor.execute(query, (personaje_principal.inventario, objID))
+        conexion_DB.conexion.commit()
+        # realizar la quary para guardar la comida mejorada
         inventario_total.objetos.remove(comida1)
         inventario_total.objetos.remove(comida2)
         comida1.combinar_objeto()
+        quary = """INSERT INTO objeto(nombre, vida, ataque, defensa, calidad, tipo, precio) VALUES (%s, %s, %s ,%s , %s, %s, %s)"""
+        valores = (comida1.name, comida1.life, comida1.attack, comida1.defense, comida1.quality, comida1.type, comida1.price)
+        conexion_DB.conectar_db()
+        conexion_DB.cursor.execute(quary, valores)
+        conexion_DB.conexion.commit()
+        IDitem = conexion_DB.cursor.lastrowid
 
+
+        query = "UPDATE inventario SET objetoID = %s WHERE objetoID = %s LIMIT 1" 
+        values = (IDitem, objID)
+        conexion_DB.cursor.execute(query, values)
+        conexion_DB.conexion.commit()
 
     del comida2
     inventario_total.objetos.append(comida1)
