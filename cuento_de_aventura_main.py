@@ -74,7 +74,7 @@ def crear_personaje():
     conexion_DB.cursor.execute(quary, valores)
     conexion_DB.conexion.commit()
     conexion_DB.close_db()
-    personaje_principal = Personaje(nombre, vida_total, ataque_total, defensa_total,100, stick, resultados[0][1]+ 1)
+    personaje_principal = Personaje(nombre, vida_total, ataque_total, defensa_total, 100, 0, 0, 0, 0, 1, resultados[0][1]+ 1)
     return personaje_principal
 
 def usar_personaje():
@@ -97,7 +97,7 @@ def usar_personaje():
             for lit in resultados:
                 if int(lit[0]) == personaje[10]:
                     stick = Objeto(lit[1], lit[2], lit[3], lit[4], lit[5], lit[6], lit[7])
-            personaje_principal = Personaje(personaje[1], personaje[4], personaje[2], personaje[3], personaje[5], personaje[6], personaje[7], personaje[8], personaje[9], stick, personaje[11])
+            personaje_principal = Personaje(personaje[1], personaje[4], personaje[2], personaje[3], personaje[5], personaje[6], personaje[7], personaje[8], personaje[9], personaje[10], personaje[11])
     if personaje_principal == "":
         print("ingrese un personaje correcto")
         personaje_principal = usar_personaje()
@@ -511,7 +511,7 @@ def REVISAR_ESTADO():
     print("ESTADO ACTUAL:")
     print(personaje_principal)
     print("--------ITEMS--------")
-    if not personaje_principal.casco == "" or personaje_principal.casco == 0:
+    if not int(personaje_principal.casco) == 0:
         quary = """SELECT * FROM objeto WHERE objetoID = %s"""
         conexion_DB.conectar_db()
         conexion_DB.cursor.execute(quary, (personaje_principal.casco, ))
@@ -523,7 +523,7 @@ def REVISAR_ESTADO():
         print(f"el ataque del obj. es {resultado[0][3]}")
         print(f"la defensa del obj es {resultado[0][4]}")
 
-    if not personaje_principal.armadura == "" or personaje_principal.armadura == 0:
+    if not int(personaje_principal.armadura) == 0:
         quary = """SELECT * FROM objeto WHERE objetoID = %s"""
         conexion_DB.conectar_db()
         conexion_DB.cursor.execute(quary, (personaje_principal.armadura, ))
@@ -535,7 +535,7 @@ def REVISAR_ESTADO():
         print(f"el ataque del obj. es {resultado[0][3]}")
         print(f"la defensa del obj es {resultado[0][4]}")
         
-    if not personaje_principal.guantes == "" or personaje_principal.guantes == 0:
+    if not int(personaje_principal.guantes) == 0:
         quary = """SELECT * FROM objeto WHERE objetoID = %s"""
         conexion_DB.conectar_db()
         conexion_DB.cursor.execute(quary, (personaje_principal.guantes, ))    
@@ -546,7 +546,7 @@ def REVISAR_ESTADO():
         print(f"la vida del obj. es {resultado[0][2]}")
         print(f"el ataque del obj. es {resultado[0][3]}")
         print(f"la defensa del obj es {resultado[0][4]}")
-    if not personaje_principal.botas == "" or personaje_principal.botas == 0:
+    if not int(personaje_principal.botas) == 0:
         quary = """SELECT * FROM objeto WHERE objetoID = %s"""
         conexion_DB.conectar_db()
         conexion_DB.cursor.execute(quary, (personaje_principal.botas, ))
@@ -557,7 +557,7 @@ def REVISAR_ESTADO():
         print(f"la vida del obj. es {resultado[0][2]}")
         print(f"el ataque del obj. es {resultado[0][3]}")
         print(f"la defensa del obj es {resultado[0][4]}")
-    if not personaje_principal.espada == "" or personaje_principal.espada == 0:
+    if not int(personaje_principal.espada) == 0:
         quary = """SELECT * FROM objeto WHERE objetoID = %s"""
         conexion_DB.conectar_db()
         conexion_DB.cursor.execute(quary, (personaje_principal.espada, ))
