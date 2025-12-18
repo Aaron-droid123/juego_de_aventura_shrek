@@ -38,7 +38,6 @@ def reconectar_db():
             conexion.close()
             print("conexion cerrada, reconectando...")
         conexion= mysql.connector.Connect(**config)
-        print("conexion exitosa")
         cursor= conexion.cursor()
 
     
@@ -53,7 +52,6 @@ def conectar_db():
     global conexion, cursor
     try:
         conexion= mysql.connector.Connect(**config)
-        print("conexion exitosa")
         cursor= conexion.cursor()
     except mysql.connector.Error as err:
         print(f"error: {err}")

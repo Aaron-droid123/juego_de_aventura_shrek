@@ -25,7 +25,6 @@ def validar_input_cadenas(message):
     while True:
         mensaje = input(message)
         if not len(mensaje) < 2:
-            print("cadena valido")
             return mensaje
         else:
             print("cadena incorrecta o vacia")
@@ -40,7 +39,6 @@ def validar_input_opcion(max_opc):
             continue
         opcion = int(opcion)
         if 1 <= opcion <= max_opc:
-            print("numero valido")
             return opcion
         else: 
             print("numero fuera de rango") 
@@ -528,6 +526,7 @@ def REVISAR_ESTADO():
         conexion_DB.conectar_db()
         conexion_DB.cursor.execute(quary, (personaje_principal.armadura, ))
         resultado = conexion_DB.cursor.fetchall()
+
 
         print("")
         print(f"el nombre del obj. es {resultado[0][1]}")

@@ -75,7 +75,7 @@ class Personaje:
     def equipar(self, equipo, objID):
 
         if equipo.name.rfind("casco") == 0:
-            if self.casco == "" or self.casco == 0:
+            if self.casco == "" or int(self.casco) == 0:
                 self.casco = objID
                 self.vida += equipo.life
                 self.ataque += equipo.attack
@@ -97,7 +97,7 @@ class Personaje:
                 return casco_temp
         elif equipo.name.rfind("armadura") == 0:
 
-            if self.armadura == "" or self.armadura == 0:
+            if self.armadura == "" or int(self.armadura) == 0:
                 self.armadura = objID
                 self.vida += equipo.life
                 self.ataque += equipo.attack
@@ -119,7 +119,7 @@ class Personaje:
                 armadura_temp = Objeto(resultado[0][1], resultado[0][2], resultado[0][3], resultado[0][4], resultado[0][5], resultado[0][6], resultado[0][7])
                 return armadura_temp
         elif equipo.name.rfind("guantes") == 0:
-            if self.guantes == "" or self.guantes == 0:
+            if self.guantes == "" or int(self.guantes) == 0:
                 self.guantes = objID
                 self.vida += equipo.life
                 self.ataque += equipo.attack
@@ -140,7 +140,7 @@ class Personaje:
                 guantes_temp = Objeto(resultado[0][1], resultado[0][2], resultado[0][3], resultado[0][4], resultado[0][5], resultado[0][6], resultado[0][7])
                 return guantes_temp
         elif equipo.name.rfind("botas") == 0:
-            if self.botas == "" or self.botas == 0:
+            if self.botas == "" or int(self.botas) == 0:
                 self.botas = objID
                 self.vida += equipo.life
                 self.ataque += equipo.attack
@@ -161,7 +161,7 @@ class Personaje:
                 botas_temp = Objeto(resultado[0][1], resultado[0][2], resultado[0][3], resultado[0][4], resultado[0][5], resultado[0][6], resultado[0][7])
                 return  botas_temp
         elif equipo.name.rfind("espada") == 0:
-            if self.espada == "" or self.espada == 0:
+            if self.espada == "" or int(self.espada) == 0:
                 self.espada = objID
                 self.vida += equipo.life
                 self.ataque += equipo.attack
