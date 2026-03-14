@@ -1,0 +1,24 @@
+h1 {
+    color: chocolate;
+}
+p {
+    color: blueviolet;
+}
+ol {
+    color: purple;
+}
+ul {
+    color: red;
+}
+li {
+    color: blue;
+}
+h2 {
+    color: chartreuse;
+}
+.equipo {
+    color:gold;
+}
+#team {
+    color:black ;
+}
