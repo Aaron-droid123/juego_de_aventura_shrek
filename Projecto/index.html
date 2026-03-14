@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academia de Programación Master</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/beneficios.css">
+
+</head>
+<body>
+<nav class="main-nav" aria-label="Principal">
+  <ul>
+    <li><a href="#Inicio">Inicio</a></li>
+    <li><a href="#Cursos">Cursos</a></li>
+    <li><a href="#Inscripcion">Inscripcion</a></li>
+    <li><a href="#Contacto">Contacto</a></li>
+  </ul>
+</nav>
+<div class="page-frame">
+  <header class="page-header">
+    <img class="site-logo" src="Images/Logo_Paginaweb.avif" alt="Logo Academia">
+    <h1 class="site-title">Academia de Programacion Master</h1>
+  </header>
+<br>
+<br>
+<h1>Domina la Programación desde cero!!</h1>
+<h2>cursos practicos para todos los niveles</h2>
+<div class="hero">
+  <img class="hero-image" src="https://www.bateaux-mouches.fr/img/selection/pano/selection/pano_bateau_sunset_2.jpg" alt="Imagen curso">
+  <div class="Descripcion1">En la Academia de Programación Master ofrecemos cursos prácticos diseñados para llevarte desde los fundamentos hasta proyectos profesionales.
+    <br>Nuestros programas combinan teoría clara con ejercicios aplicados y proyectos reales que puedes incluir en tu portafolio.
+    <br>Contamos con instructores certificados, tutorías personalizadas y evaluaciones prácticas para acompañar tu progreso.
+    <br>Ofrecemos horarios flexibles y modalidades presencial u online, con acceso a material y soporte continuo en la comunidad.
+    <br>Al completar un curso recibirás un certificado oficial y recursos de actualización para seguir creciendo profesionalmente.</div>
+</div>
+<br>
+<button id="toggle-cursos-btn" type="button" class="Boton-llamativo" aria-expanded="false">Ver Cursos disponibles!!</button>
+<br>
+<section id="cursos-section" class="hidden">
+  <h2 id="Cursos">Nuestros Cursos</h2>
+
+  <div class="cursos-tabla" style="border: 1px solid black; border-radius: 10px; overflow: hidden; display: inline-block;">
+<table class="cursos_lista" style="border: 1px solid black; border-radius: 10px; border-collapse: separate;">
+<tr>
+<th>Nombre del curso</th>
+<th>Duracion</th>
+<th>Nivel</th>
+<th>Precio</th>
+</tr>
+  <tr class="rojo">
+    <td>HTML y CSS basico</td>
+    <td>4 semanas</td>
+    <td>principiante</td>
+    <td class="precios">$50</td>
+    </tr>
+    <tr class="azul">
+    <td>JavaScript fundamentos</td>
+    <td>6 semanas</td>
+    <td>intermedio</td>
+    <td class="precios">$80</td>
+    </tr>
+    <tr class="rojo">
+    <td>Python para todos</td>
+    <td>8 semanas</td>
+    <td>principiante</td>
+    <td class="precios">$70</td>
+    </tr>
+    <tr class="azul">
+    <td>desarrollo Web Fullstack</td>
+    <td>12 semanas</td>
+    <td>Avanzado</td>
+    <td class="precios">$150</td>
+     </tr>
+    <tr class="rojo">
+    <td>Base de datos SQL</td>
+    <td>5 semanas</td>
+    <td>intermedio</td>
+    <td class="precios">$60</td>
+    </tr>
+</table>
+</div>
+</section>
+
+  <!--2nda parte de la tarea-->
+<br>
+<br>
+<div class="Beneficios">
+  <h2 class="beneficios-title">Beneficios principales</h2>
+  <div class="beneficios-listas">
+    <div class="beneficios-col">
+      <h3 class="beneficios-subtitle">Ventajas exclusivas</h3>
+      <ol class="beneficios-ol">
+        <li>Instructores certificados</li>
+        <li>Proyectos prácticos reales</li>
+        <li>Acceso de por vida al contenido</li>
+        <li>Certificado oficial al completar</li>
+      </ol>
+    </div>
+    <div class="beneficios-col">
+      <h3 class="beneficios-subtitle">Recursos incluidos</h3>
+      <ul class="beneficios-ul">
+        <li>Material de estudio en PDF</li>
+        <li>Videos tutoriales HD</li>
+        <li>Ejercicios interactivos</li>
+        <li>Soporte en foro privado</li>
+        <li>Sesiones de mentoría</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<br>
+<br>
+<div class="formulario">
+<form action="" id="Inscripcion" oninput="v.value=s.value">
+  <h3>Datos personales</h3>
+
+  <div class="form-group">
+    <label for="name"><em>Nombre completo</em></label>
+    <input type="text" id="name" required>
+  </div>
+
+  <div class="form-group">
+    <label for="email"><em>Email</em></label>
+    <input type="email" id="email" required>
+  </div>
+
+  <div class="form-group">
+    <label for="phone">Ingrese su numero de Telefono:</label>
+    <input class="form-phone" type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="123-456-7890" size="15">
+    
+  </div>
+
+  <div class="form-group">
+    <label for="date"><em>Fecha de nacimiento: </em></label>
+    <input type="date" id="date">
+  </div>
+
+  <div class="form-group">
+    <label for="course"><em>Nombre del curso:</em></label>
+    <select name="nombre_curso" id="course">
+      <option value="html">HTML y CSS básico</option>
+      <option value="js">JavaScript fundamentos</option>
+      <option value="python">Python para todos</option>
+      <option value="fullstack">Desarrollo Web Fullstack</option>
+      <option value="sql">Base de datos SQL</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <p><em>Modalidad</em></p>
+    <input type="radio" id="presencial" name="modalidad" value="Presencial1">
+    <label for="presencial">Presencial</label>
+
+    <input type="radio" id="online" name="modalidad" value="Online2">
+    <label for="online">Online</label>
+
+    <input type="radio" id="hibrido" name="modalidad" value="Hibrido3">
+    <label for="hibrido">Hibrido</label>
+  </div>
+
+  <div class="form-group">
+    <p><em>Horario preferido</em></p>
+    <input type="checkbox" id="morning" value="Mañana">
+    <label for="morning">Mañana</label>
+
+    <input type="checkbox" id="afternoon" value="Tarde">
+    <label for="afternoon">Tarde</label>
+
+    <input type="checkbox" id="night" value="Noche">
+    <label for="night">Noche</label>
+  </div>
+
+  <div class="form-group">
+    <label for="experience"><em>Nivel de experiencia</em></label>
+    <input type="range" id="experience" name="s" min="1" max="10" value="5">
+    <output name="v">5</output>
+  </div>
+
+  <div class="form-group">
+    <label for="message"><em>Cuentanos sobre como nos conociste?😄</em></label>
+    <textarea name="Mensaje" id="message"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="certificate-color"><em>Color de Certificado</em></label>
+    <input type="color" id="certificate-color" name="color_certificado">
+  </div>
+
+  <div class="form-group">
+    <label for="cv"><em>Sube tu CV (tu PDF)</em></label>
+    <input type="file" id="cv" name="curriculum">
+  </div>
+
+  <div class="form-actions">
+    <button type="submit">Enviar..</button>
+    <button type="reset">Reiniciar</button>
+    <button type="button">Ver requisitos</button>
+  </div>
+</form>
+</div>
+<br><br><br>
+
+<div class="cursos_horarios style-v2">
+  <h2>Versiones verticales de horarios</h2>
+  <div class="vertical-tables">
+    <table class="Table_cursos_v1">
+      <tr>
+        <th>Dia</th>
+        <th>Curso</th>
+        <th>Horario</th>
+        <th>Aula</th>
+      </tr>
+      <tr>
+        <td rowspan="2">Lunes</td>
+        <td rowspan="2">Html y css basico</td>
+        <td>Mañana</td>
+        <td>A1</td>
+      </tr>
+      <tr>
+        <td>Tarde</td>
+        <td>B1</td>
+      </tr>
+      <tr>
+        <td rowspan="3">Martes</td>
+        <td rowspan="2">JavaScript Fundamentos</td>
+        <td>Mañana</td>
+        <td>C1</td>
+      </tr>
+      <tr>
+        <td>Tarde</td>
+        <td>A1</td>
+      </tr>
+      <tr>
+        <td>Base De Datos SQL</td>
+        <td>Noche</td>
+        <td>B1</td>
+      </tr>
+      <tr>
+        <td rowspan="2">Miercoles</td>
+        <td rowspan="2">Python para Todos</td>
+        <td>Mañana</td>
+        <td>B1</td>
+      </tr>
+      <tr>
+        <td>Tarde</td>
+        <td>C1</td>
+      </tr>
+      <tr>
+        <td rowspan="2">Jueves</td>
+        <td rowspan="2">Desarrollo web de Fullstack</td>
+        <td>Tarde</td>
+        <td>A1</td>
+      </tr>
+      <tr>
+        <td>Noche</td>
+        <td>B1</td>
+      </tr>
+      <tr>
+        <td>Viernes</td>
+        <td>Base de Datos SQL</td>
+        <td>Mañana</td>
+        <td>C1</td>
+      </tr>
+    </table>
+
+    <table class="Table_cursos_v2">
+      <tr>
+        <th>Dia</th>
+        <th>Curso</th>
+        <th>Horario</th>
+        <th>Aula</th>
+      </tr>
+      <tr>
+        <td rowspan="2">Lunes</td>
+        <td rowspan="2">Html y css basico</td>
+        <td>Mañana</td>
+        <td>A1</td>
+      </tr>
+      <tr>
+        <td>Tarde</td>
+        <td>B1</td>
+      </tr>
+      <tr>
+        <td rowspan="3">Martes</td>
+        <td rowspan="2">JavaScript Fundamentos</td>
+        <td>Mañana</td>
+        <td>C1</td>
+      </tr>
+      <tr>
+        <td>Tarde</td>
+        <td>A1</td>
+      </tr>
+      <tr>
+        <td>Base De Datos SQL</td>
+        <td>Noche</td>
+        <td>B1</td>
+      </tr>
+      <tr>
+        <td rowspan="2">Miercoles</td>
+        <td rowspan="2">Python para Todos</td>
+        <td>Mañana</td>
+        <td>B1</td>
+      </tr>
+      <tr>
+        <td>Tarde</td>
+        <td>C1</td>
+      </tr>
+      <tr>
+        <td rowspan="2">Jueves</td>
+        <td rowspan="2">Desarrollo web de Fullstack</td>
+        <td>Tarde</td>
+        <td>A1</td>
+      </tr>
+      <tr>
+        <td>Noche</td>
+        <td>B1</td>
+      </tr>
+      <tr>
+        <td>Viernes</td>
+        <td>Base de Datos SQL</td>
+        <td>Mañana</td>
+        <td>C1</td>
+      </tr>
+    </table>
+
+    <table class="Table_cursos_v3">
+      <tr>
+        <th>Dia</th>
+        <th>Curso</th>
+        <th>Horario</th>
+        <th>Aula</th>
+      </tr>
+      <tr>
+        <td rowspan="2">Lunes</td>
+        <td rowspan="2">Html y css basico</td>
+        <td>Mañana</td>
+        <td>A1</td>
+      </tr>
+      <tr>
+        <td>Tarde</td>
+        <td>B1</td>
+      </tr>
+      <tr>
+        <td rowspan="3">Martes</td>
+        <td rowspan="2">JavaScript Fundamentos</td>
+        <td>Mañana</td>
+        <td>C1</td>
+      </tr>
+      <tr>
+        <td>Tarde</td>
+        <td>A1</td>
+      </tr>
+      <tr>
+        <td>Base De Datos SQL</td>
+        <td>Noche</td>
+        <td>B1</td>
+      </tr>
+      <tr>
+        <td rowspan="2">Miercoles</td>
+        <td rowspan="2">Python para Todos</td>
+        <td>Mañana</td>
+        <td>B1</td>
+      </tr>
+      <tr>
+        <td>Tarde</td>
+        <td>C1</td>
+      </tr>
+      <tr>
+        <td rowspan="2">Jueves</td>
+        <td rowspan="2">Desarrollo web de Fullstack</td>
+        <td>Tarde</td>
+        <td>A1</td>
+      </tr>
+      <tr>
+        <td>Noche</td>
+        <td>B1</td>
+      </tr>
+      <tr>
+        <td>Viernes</td>
+        <td>Base de Datos SQL</td>
+        <td>Mañana</td>
+        <td>C1</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+  </div>
+
+
+<div class="Preguntas_Frecuentes">
+<section id="FAQ">
+  <h2>Preguntas Frecuentes de Nuestros Suscriptores</h2>
+
+  <div class="faq-list">
+    <details>
+      <summary>¿Necesito experiencia previa?</summary>
+      <p>No, ofrecemos cursos desde nivel cero. Nuestros programas empiezan con fundamentos y van subiendo de nivel.</p>
+    </details>
+
+    <details>
+      <summary>¿Los cursos tienen certificado?</summary>
+      <p>Sí, todos incluyen certificado digital verificado que podrás descargar al completar el curso.</p>
+    </details>
+
+    <details>
+      <summary>¿Puedo pagar en cuotas?</summary>
+      <p>Ofrecemos planes de pago de hasta 3 meses sin intereses; revisa las opciones al inscribirte.</p>
+    </details>
+
+    <details>
+      <summary>¿Hay soporte o mentoría?</summary>
+      <p>Sí, tendrás acceso a soporte y mentoría cuando lo necesites, según el plan que elijas.</p>
+    </details>
+
+    <details>
+      <summary>¿Se puede cambiar el curso ya inscrito?</summary>
+      <p>Sí, es posible. Debes enviar un correo para revisar la disponibilidad y el ajuste de horas.</p>
+    </details>
+  </div>
+</section>
+</div>
+</div>
+<script>
+  (function(){
+    const btn = document.getElementById('toggle-cursos-btn');
+    const section = document.getElementById('cursos-section');
+    if(!btn || !section) return;
+    btn.addEventListener('click', function(){
+      const isHidden = section.classList.toggle('hidden');
+      btn.setAttribute('aria-expanded', String(!isHidden));
+      btn.textContent = isHidden ? 'Ver Cursos disponibles!!' : 'Ocultar Cursos';
+    });
+  })();
+</script>
+<br>
+<div class="Pie_de_pagina">
+  <footer class="Footer-centrado">
+    <div class="footer-columns">
+      <div class="footer-col footer-left">
+        <address class="Contactenos">
+          <p>Contactenos</p>
+          <p>Direccion fisica: Calle Falsa 123, Ciudad Ejemplo</p>
+          <p>Telefono: 123-456-7890</p>
+          <p>Horario de atencion: Lunes a Viernes de 9am a 5pm</p>
+        </address>
+      </div>
+
+      <div class="footer-col footer-center">
+        <nav class="politicas" aria-label="Politicas y enlaces">
+          <a href="politica_de_privacidad">Politica de Privacidad</a>
+          <a href="terminos_y_condiciones">Terminos y Condiciones</a>
+          <a href="blog">Blog</a>
+          <a href="empleo">Empleo</a>
+        </nav>
+      </div>
+
+      <div class="footer-col footer-right">
+        <div class="social-media" aria-label="Redes sociales">
+          <a href="https://instagram.com" class="social-link" aria-label="Instagram">
+            <img src="Images/instagram-icon.png" alt="Instagram" class="social-icon">
+          </a>
+          <a href="https://www.facebook.com/ReposteriaMundial" class="social-link" aria-label="Facebook">
+            <img src="Images/facebook-icon.png" alt="Facebook" class="social-icon">
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <p class="copyright"><small>&copy; 2024 CodeMaster Academy. Todos los derechos reservados.</small></p>
+  </footer>
+</div>
+</body>
+</html>
